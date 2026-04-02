@@ -1,10 +1,12 @@
-from app.schemas import ProcessRequest, ProcessResponse, ProcessStep, DecisionPoint
+from app.schemas import DecisionPoint, ProcessRequest, ProcessResponse, ProcessStep
 
 
 def test_process_request_valid():
     req = ProcessRequest(
         process_name="Invoice Approval",
-        description="An employee submits an invoice. The manager reviews it. If the amount exceeds 5000 EUR, finance approval is required."
+        description="An employee submits an invoice. " \
+        "The manager reviews it. " \
+        "If the amount exceeds 5000 EUR, finance approval is required.",
     )
     assert req.process_name == "Invoice Approval"
     assert "employee submits" in req.description.lower()

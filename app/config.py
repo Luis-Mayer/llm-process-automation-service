@@ -1,8 +1,11 @@
-from pydantic import BaseModel
-from dotenv import load_dotenv
 import os
 
-# Load environment variables from a local .env file so configuration can be managed outside the source code.
+from dotenv import load_dotenv
+from pydantic import BaseModel
+
+# Load environment variables from a local .env file 
+# so configuration can be managed outside the source 
+# code.
 load_dotenv()
 
 

@@ -1,4 +1,5 @@
 from openai import OpenAI
+
 from app.config import settings
 
 # Initialize a reusable OpenAI client with credentials loaded from the application configuration

@@ -6,13 +6,6 @@ A container-ready FastAPI service for extracting structured process information 
 
 This project demonstrates how unstructured process descriptions can be transformed into structured JSON outputs using a production-oriented API service. It combines LLM-based extraction with schema validation, logging, and artifact persistence.
 
-The service is designed to showcase practical AI engineering skills, including:
-- API development with FastAPI
-- structured LLM outputs with JSON schema validation
-- prompt-based information extraction
-- logging and artifact storage for traceability
-- modern Python project setup with `uv`
-
 ## Features
 
 - FastAPI-based REST API
@@ -73,7 +66,7 @@ A structured JSON representation containing:
 1. Clone the repository
 
    ```
-   git clone <your-repo-url>
+   git clone https://github.com/Luis-Mayer/llm-process-automation-service.git
    cd llm-process-automation-service
    ```
 

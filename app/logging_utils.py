@@ -1,5 +1,6 @@
 import logging
 from pathlib import Path
+
 from app.config import settings
 
 
@@ -17,9 +18,7 @@ def setup_logger() -> logging.Logger:
     # Avoid adding duplicate handlers when the app reloads
     if not logger.handlers:
         # Define a shared log message format
-        formatter = logging.Formatter(
-            "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
-        )
+        formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(name)s | %(message)s")
 
         # Log messages to the console
         console_handler = logging.StreamHandler()

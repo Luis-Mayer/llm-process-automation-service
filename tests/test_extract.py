@@ -1,4 +1,5 @@
 from fastapi.testclient import TestClient
+
 from app.main import app
 
 client = TestClient(app)
@@ -7,7 +8,7 @@ client = TestClient(app)
 def test_extract_process():
     payload = {
         "process_name": "Invoice Approval",
-        "description": "An employee submits an invoice. The manager reviews it."
+        "description": "An employee submits an invoice. The manager reviews it.",
     }
 
     response = client.post("/extract", json=payload)

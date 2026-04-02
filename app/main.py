@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
-from app.schemas import ProcessRequest, ProcessResponse
+
 from app.logging_utils import setup_logger
+from app.schemas import ProcessRequest, ProcessResponse
 from app.service import extract_process_with_llm
 from app.storage import save_extraction_result
 
