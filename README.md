@@ -4,7 +4,7 @@ A container-ready FastAPI service for extracting structured process information 
 
 ## Overview
 
-This project demonstrates how unstructured process descriptions can be transformed into structured JSON outputs using a production-oriented API service. It combines LLM-based extraction with schema validation, logging, and artifact persistence.
+This project demonstrates how unstructured business process descriptions can be transformed into structured JSON outputs using a production-oriented API service. It combines LLM-based extraction with schema validation, logging, artifact persistence, and containerized deployment.
 
 ## Features
 
@@ -16,6 +16,8 @@ This project demonstrates how unstructured process descriptions can be transform
 - Automatic storage of request/response artifacts
 - Swagger UI for interactive testing
 - Lightweight test setup with `pytest`
+- Containerized deployment with Docker
+- CI checks with GitHub Actions and Ruff
 
 ## Project Structure
 
@@ -40,7 +42,6 @@ llm-process-automation-service/
 │   ├── test_schema.py
 │   └── test_service.py
 │
-├── .env
 ├── .env.example
 ├── .gitignore
 ├── Dockerfile
@@ -197,6 +198,8 @@ Run the test suite with:
 uv run pytest
 ```
 
+The test suite includes schema, service, and endpoint tests. Live extraction tests can be run locally when an OpenAI API key is available.
+
 ## Logging and Artifacts
 
 The service automatically creates:
@@ -210,12 +213,12 @@ This supports debugging, reproducibility, and lightweight evaluation of extracti
 
 Possible next steps:
 
-- Docker-based deployment
-- CI pipeline for automated tests
-- prompt versioning
-- additional schema fields such as inputs, outputs, or risks
+- prompt versioning and comparison of extraction strategies
+- additional schema fields such as inputs, outputs, risks, and missing information
 - support for BPMN XML generation
+- artifact persistence via mounted volumes or external storage
 - basic evaluation metrics for extraction quality
+- deployment to a cloud environment
 
 ## Why this project?
 
@@ -224,5 +227,5 @@ This project was built to demonstrate practical AI engineering capabilities at t
 - LLM-based automation
 - API development
 - structured data extraction
-- reproducible local deployment
-- traceability and validation
+- containerized deployment
+- testing, traceability, and validation
