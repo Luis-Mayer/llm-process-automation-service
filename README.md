@@ -23,19 +23,24 @@ This project demonstrates how unstructured process descriptions can be transform
 llm-process-automation-service/
 │
 ├── app/
-│   ├── main.py
+│   ├── __init__.py
 │   ├── config.py
-│   ├── schemas.py
-│   ├── prompts.py
+│   ├── logging_utils.py
+│   ├── main.py
 │   ├── openai_client.py
+│   ├── prompts.py
+│   ├── schemas.py
 │   ├── service.py
-│   ├── storage.py
-│   └── logging_utils.py
+│   └── storage.py
 │
 ├── tests/
+│   ├── __init__.py
+│   ├── test_extract.py
 │   ├── test_health.py
-│   └── test_schema.py
+│   ├── test_schema.py
+│   └── test_service.py
 │
+├── .env
 ├── .env.example
 ├── .gitignore
 ├── Dockerfile
