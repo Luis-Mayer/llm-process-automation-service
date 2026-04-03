@@ -3,7 +3,6 @@ from fastapi.testclient import TestClient
 from app.main import app
 from app.schemas import DecisionPoint, ProcessResponse, ProcessStep
 
-
 client = TestClient(app)
 
 
