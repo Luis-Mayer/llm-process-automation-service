@@ -32,4 +32,23 @@ def test_process_response_valid():
 
     assert response.process_name == "Invoice Approval"
     assert len(response.steps) == 2
+    assert response.steps[0].condition is None
+    assert response.steps[1].actor == "Manager"
     assert response.decision_points[0].condition == "Amount > 5000 EUR"
+
+
+def test_process_response_missing_required_field_raises():
+    try:
+        ProcessResponse(
+            process_name="Invoice Approval",
+            summary="Invoice approval workflow",
+            roles=["Employee", "Manager"],
+            steps=[
+                ProcessStep(id=1, actor="Employee", action="Submit invoice"),
+            ],
+            # data is missing decision_points, should raise
+        )
+        assert False, "Expected validation error for missing decision_points"
+    except Exception as exc:
+        assert "decision_points" in str(exc)
+
