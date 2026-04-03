@@ -4,7 +4,7 @@ from app.prompts import SYSTEM_PROMPT, build_user_prompt
 from app.schemas import ProcessRequest, ProcessResponse
 
 # JSON schema used to enforce a structured LLM response format.
-# This ensures the LLM returns a consistent process representation 
+# This ensures the LLM returns a consistent process representation
 # that can be validated against the Pydantic response model.
 PROCESS_RESPONSE_SCHEMA = {
     "name": "process_extraction",
@@ -50,10 +50,10 @@ PROCESS_RESPONSE_SCHEMA = {
 
 
 def extract_process_with_llm(request: ProcessRequest) -> ProcessResponse:
-    """Generate a structured process representation from 
+    """Generate a structured process representation from
     a natural-language description using the OpenAI API."""
 
-    # Send the system instruction and the user-specific process description 
+    # Send the system instruction and the user-specific process description
     # to the model, while enforcing a strict JSON schema for the response.
     response = client.responses.create(
         model=settings.openai_model,
@@ -76,7 +76,7 @@ def extract_process_with_llm(request: ProcessRequest) -> ProcessResponse:
         },
     )
 
-    # Validate the structured model output against the Pydantic response schema 
+    # Validate the structured model output against the Pydantic response schema
     # before returning it to the API layer.
     output_text = response.output_text
     return ProcessResponse.model_validate_json(output_text)

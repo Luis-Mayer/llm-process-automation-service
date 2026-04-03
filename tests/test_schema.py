@@ -4,8 +4,8 @@ from app.schemas import DecisionPoint, ProcessRequest, ProcessResponse, ProcessS
 def test_process_request_valid():
     req = ProcessRequest(
         process_name="Invoice Approval",
-        description="An employee submits an invoice. " \
-        "The manager reviews it. " \
+        description="An employee submits an invoice. "
+        "The manager reviews it. "
         "If the amount exceeds 5000 EUR, finance approval is required.",
     )
     assert req.process_name == "Invoice Approval"
