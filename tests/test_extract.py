@@ -1,4 +1,5 @@
 from fastapi.testclient import TestClient
+
 from app.main import app
 
 client = TestClient(app)
@@ -35,4 +36,3 @@ def test_extract_process_invalid_description_too_short():
 
     assert response.status_code == 422
     assert "description" in response.json()["detail"][0]["loc"]
-

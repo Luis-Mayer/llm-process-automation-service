@@ -51,4 +51,3 @@ def test_process_response_missing_required_field_raises():
         assert False, "Expected validation error for missing decision_points"
     except Exception as exc:
         assert "decision_points" in str(exc)
-
