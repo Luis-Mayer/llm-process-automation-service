@@ -21,6 +21,17 @@ This runbook provides operational guidance for running and maintaining the LLM P
    uv run uvicorn app.main:app --reload
    ```
 
+### Docker mode (optional)
+
+- Build the Docker image:
+  ```
+  docker build -t llm-process-automation-service .
+  ```
+- Run containerized app (use .env for secrets):
+  ```
+  docker run --rm -p 8000:8000 --env-file .env llm-process-automation-service
+  ```
+
 4. Verify it's running:
    - API: http://127.0.0.1:8000
    - Health check: http://127.0.0.1:8000/health

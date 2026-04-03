@@ -97,6 +97,22 @@ A structured JSON representation containing:
    - API root: http://127.0.0.1:8000
    - Swagger docs: http://127.0.0.1:8000/docs
 
+### Run with Docker
+
+1. Build the container image:
+   ```
+   docker build -t llm-process-automation-service .
+   ```
+2. Run the container:
+   ```
+   docker run --rm -p 8000:8000 --env-file .env llm-process-automation-service
+   ```
+
+   The API will be available at the same endpoints:
+
+   - API root: http://127.0.0.1:8000
+   - Swagger docs: http://127.0.0.1:8000/docs
+
 ## API Endpoints
 
 ### GET /health
