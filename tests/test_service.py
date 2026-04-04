@@ -26,6 +26,10 @@ def test_extract_process_with_llm_mocked_response():
                 "false_branch": "Direct payment",
             }
         ],
+        "inputs": ["Invoice document"],
+        "outputs": ["Approved invoice"],
+        "risks": ["Delay in payment"],
+        "missing_information": "Specific threshold amount",
     }
 
     class FakeResponse:
@@ -40,3 +44,7 @@ def test_extract_process_with_llm_mocked_response():
     assert result.roles == ["Employee", "Manager"]
     assert result.steps[0].actor == "Employee"
     assert result.decision_points[0].condition == "Amount > 5000"
+    assert result.inputs == ["Invoice document"]
+    assert result.outputs == ["Approved invoice"]
+    assert result.risks == ["Delay in payment"]
+    assert result.missing_information == "Specific threshold amount"

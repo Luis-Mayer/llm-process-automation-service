@@ -42,8 +42,12 @@ PROCESS_RESPONSE_SCHEMA = {
                     "additionalProperties": False,
                 },
             },
+            "inputs": {"type": "array", "items": {"type": "string"}},
+            "outputs": {"type": "array", "items": {"type": "string"}},
+            "risks": {"type": "array", "items": {"type": "string"}},
+            "missing_information": {"type": ["string", "null"]},
         },
-        "required": ["process_name", "summary", "roles", "steps", "decision_points"],
+        "required": ["process_name", "summary", "roles", "steps", "decision_points", "inputs", "outputs", "risks", "missing_information"],
         "additionalProperties": False,
     },
 }

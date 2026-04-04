@@ -5,7 +5,7 @@ from app.schemas import ProcessRequest, ProcessResponse
 from app.service import extract_process_with_llm
 from app.storage import save_extraction_result
 
-# Initialize the application logger
+# Initialize the application loggerg
 logger = setup_logger()
 
 # Create the FastAPI application

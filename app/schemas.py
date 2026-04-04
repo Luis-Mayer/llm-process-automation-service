@@ -41,3 +41,15 @@ class ProcessResponse(BaseModel):
     decision_points: List[DecisionPoint] = Field(
         default_factory=list, description="Extracted decision points."
     )
+    inputs: List[str] = Field(
+        default_factory=list, description="List of inputs required for the process."
+    )
+    outputs: List[str] = Field(
+        default_factory=list, description="List of outputs produced by the process."
+    )
+    risks: List[str] = Field(
+        default_factory=list, description="Potential risks or issues in the process."
+    )
+    missing_information: Optional[str] = Field(
+        default=None, description="Any information that is missing or unclear from the description."
+    )

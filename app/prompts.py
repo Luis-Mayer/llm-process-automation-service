@@ -23,4 +23,8 @@ Extract the process into a structured representation with:
 - roles
 - steps
 - decision_points
+- inputs
+- outputs
+- risks
+- missing_information
 """
