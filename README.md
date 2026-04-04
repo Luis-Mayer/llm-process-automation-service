@@ -11,6 +11,7 @@ This project demonstrates how unstructured business process descriptions can be 
 - FastAPI-based REST API
 - OpenAI-powered extraction from unstructured text
 - Structured JSON output validated with Pydantic
+- Comprehensive process analysis including inputs, outputs, risks, and missing information
 - Health endpoint for service monitoring
 - Local logging to file and console
 - Automatic storage of request/response artifacts
@@ -66,6 +67,10 @@ A structured JSON representation containing:
 - involved roles
 - ordered process steps
 - decision points
+- required inputs
+- produced outputs
+- potential risks
+- missing information
 
 ## Setup
 
@@ -186,7 +191,92 @@ Extracts structured process information from an unstructured process description
       "true_branch": "Finance approval required",
       "false_branch": "Proceed directly to payment"
     }
-  ]
+  ],
+  "inputs": [
+    "Invoice document",
+    "Purchase order details"
+  ],
+  "outputs": [
+    "Approved invoice",
+    "Payment confirmation"
+  ],
+  "risks": [
+    "Payment delays",
+    "Approval bottlenecks",
+    "Incorrect invoice processing"
+  ],
+  "missing_information": "Specific approval thresholds and escalation procedures"
+}
+```
+
+### POST /extract-text
+
+Extracts structured process information from plain text input (accepts text/plain content type).
+
+**Example Request**
+```
+Content-Type: text/plain
+
+An employee submits an invoice. The manager reviews it. If the amount exceeds 5000 EUR, finance approval is required. After approval, the invoice is paid.
+```
+
+**Example Response**
+```json
+{
+  "process_name": "Invoice approval",
+  "summary": "Invoice approval workflow with conditional finance approval.",
+  "roles": [
+    "Employee",
+    "Manager",
+    "Finance"
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "actor": "Employee",
+      "action": "Submit invoice",
+      "condition": null
+    },
+    {
+      "id": 2,
+      "actor": "Manager",
+      "action": "Review invoice",
+      "condition": null
+    },
+    {
+      "id": 3,
+      "actor": "Finance",
+      "action": "Approve invoice",
+      "condition": "Amount exceeds 5000 EUR"
+    },
+    {
+      "id": 4,
+      "actor": "System",
+      "action": "Pay invoice",
+      "condition": null
+    }
+  ],
+  "decision_points": [
+    {
+      "condition": "Amount exceeds 5000 EUR",
+      "true_branch": "Finance approval required",
+      "false_branch": "Proceed directly to payment"
+    }
+  ],
+  "inputs": [
+    "Invoice document",
+    "Purchase order details"
+  ],
+  "outputs": [
+    "Approved invoice",
+    "Payment confirmation"
+  ],
+  "risks": [
+    "Payment delays",
+    "Approval bottlenecks",
+    "Incorrect invoice processing"
+  ],
+  "missing_information": "Specific approval thresholds and escalation procedures"
 }
 ```
 
