@@ -1,0 +1,32 @@
+[
+  {
+    "id": "invoice_approval_01",
+    "input_text": "An employee submits an invoice. The manager reviews it. If the amount exceeds 5000 EUR, finance must approve it. After approval, payment is triggered.",
+    "expected": {
+      "roles": ["Employee", "Manager", "Finance"],
+      "min_steps": 3,
+      "outputs": ["payment"],
+      "risks": []
+    }
+  },
+  {
+    "id": "purchase_request_01",
+    "input_text": "An employee creates a purchase request and submits it to the manager. The manager checks the request. If the request is incomplete, it is sent back to the employee. If the amount is above 10000 EUR, procurement reviews it. After final approval, a purchase order is created.",
+    "expected": {
+      "roles": ["Employee", "Manager", "Procurement"],
+      "min_steps": 4,
+      "outputs": ["purchase order"],
+      "risks": []
+    }
+  },
+  {
+    "id": "budget_check_01",
+    "input_text": "A department submits a budget request. Finance reviews the available budget. If sufficient funds are available, the budget is approved. Otherwise, the request is rejected. Risks include delayed approval and missing financial data.",
+    "expected": {
+      "roles": ["Finance"],
+      "min_steps": 3,
+      "outputs": ["budget approval", "rejection"],
+      "risks": ["delayed approval", "missing financial data"]
+    }
+  }
+]
