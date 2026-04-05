@@ -1,0 +1,226 @@
+[
+  {
+    "id": "invoice_approval_01",
+    "status_code": 200,
+    "passed": true,
+    "metrics": {
+      "role_coverage": 1.0,
+      "step_count": 4,
+      "min_steps_expected": 3,
+      "min_steps_passed": true,
+      "step_score": 1.0,
+      "output_coverage": 1.0,
+      "risk_coverage": 1.0,
+      "overall_score": 1.0
+    },
+    "actual_output": {
+      "process_name": "Unknown",
+      "summary": "An employee submits an invoice; the manager reviews it. If the invoice amount exceeds 5000 EUR, finance must approve it. After required approval, payment is triggered.",
+      "roles": [
+        "Employee",
+        "Manager",
+        "Finance"
+      ],
+      "steps": [
+        {
+          "id": 1,
+          "actor": "Employee",
+          "action": "Submit invoice",
+          "condition": null
+        },
+        {
+          "id": 2,
+          "actor": "Manager",
+          "action": "Review invoice",
+          "condition": null
+        },
+        {
+          "id": 3,
+          "actor": "Finance",
+          "action": "Approve invoice",
+          "condition": "If amount exceeds 5000 EUR"
+        },
+        {
+          "id": 4,
+          "actor": "Unspecified",
+          "action": "Trigger payment",
+          "condition": "After approval"
+        }
+      ],
+      "decision_points": [
+        {
+          "condition": "Invoice amount exceeds 5000 EUR",
+          "true_branch": "Finance must approve the invoice",
+          "false_branch": "No finance approval required; proceed after manager review"
+        }
+      ],
+      "inputs": [
+        "Invoice",
+        "Invoice amount (EUR)"
+      ],
+      "outputs": [
+        "Approval (when required)",
+        "Payment triggered"
+      ],
+      "risks": [
+        "Payment delays when finance approval is required for invoices exceeding 5000 EUR"
+      ],
+      "missing_information": "Who triggers the payment; whether manager review constitutes approval for amounts ≤ 5000 EUR; actions on rejection by manager or finance; timelines/SLA for reviews and approvals; systems or channels used for submission and payment; handling of exceptions or missing/incorrect invoice data."
+    }
+  },
+  {
+    "id": "purchase_request_01",
+    "status_code": 200,
+    "passed": true,
+    "metrics": {
+      "role_coverage": 1.0,
+      "step_count": 6,
+      "min_steps_expected": 4,
+      "min_steps_passed": true,
+      "step_score": 1.0,
+      "output_coverage": 1.0,
+      "risk_coverage": 1.0,
+      "overall_score": 1.0
+    },
+    "actual_output": {
+      "process_name": "Unknown",
+      "summary": "An employee creates and submits a purchase request to a manager. The manager checks the request and, if incomplete, sends it back to the employee. If the request amount is above 10000 EUR, procurement reviews it. After final approval, a purchase order is created.",
+      "roles": [
+        "Employee",
+        "Manager",
+        "Procurement"
+      ],
+      "steps": [
+        {
+          "id": 1,
+          "actor": "Employee",
+          "action": "Creates a purchase request and submits it to the manager",
+          "condition": null
+        },
+        {
+          "id": 2,
+          "actor": "Manager",
+          "action": "Checks the request",
+          "condition": null
+        },
+        {
+          "id": 3,
+          "actor": "Manager",
+          "action": "Sends the request back to the employee",
+          "condition": "If the request is incomplete"
+        },
+        {
+          "id": 4,
+          "actor": "Procurement",
+          "action": "Reviews the request",
+          "condition": "If the amount is above 10000 EUR"
+        },
+        {
+          "id": 5,
+          "actor": "Unspecified",
+          "action": "Final approval is given",
+          "condition": null
+        },
+        {
+          "id": 6,
+          "actor": "Unspecified",
+          "action": "Creates a purchase order",
+          "condition": "After final approval"
+        }
+      ],
+      "decision_points": [
+        {
+          "condition": "Is the request complete?",
+          "true_branch": "Proceed (manager does not send it back) and continue to amount check / next steps",
+          "false_branch": "Manager sends the request back to the employee"
+        },
+        {
+          "condition": "Is the amount above 10000 EUR?",
+          "true_branch": "Procurement reviews the request",
+          "false_branch": "Proceed to final approval without procurement review"
+        }
+      ],
+      "inputs": [
+        "Purchase request (including the requested amount and completeness status)"
+      ],
+      "outputs": [
+        "Purchase order",
+        "Request returned to employee (when incomplete)"
+      ],
+      "risks": [
+        "Delays if requests are incomplete and sent back to the employee",
+        "Additional delay when procurement review is required for amounts above 10000 EUR"
+      ],
+      "missing_information": "[Who performs the final approval; who creates the purchase order; what the employee must do after the request is sent back (revise/resubmit) and whether there are additional approval steps; treatment of requests with amount equal to 10000 EUR; definition of 'incomplete']"
+    }
+  },
+  {
+    "id": "budget_check_01",
+    "status_code": 200,
+    "passed": false,
+    "metrics": {
+      "role_coverage": 1.0,
+      "step_count": 4,
+      "min_steps_expected": 3,
+      "min_steps_passed": true,
+      "step_score": 1.0,
+      "output_coverage": 0.0,
+      "risk_coverage": 1.0,
+      "overall_score": 0.75
+    },
+    "actual_output": {
+      "process_name": "Unknown",
+      "summary": "A department submits a budget request. Finance reviews available budget and approves the request if sufficient funds exist; otherwise the request is rejected.",
+      "roles": [
+        "Department",
+        "Finance"
+      ],
+      "steps": [
+        {
+          "id": 1,
+          "actor": "Department",
+          "action": "Submit budget request",
+          "condition": null
+        },
+        {
+          "id": 2,
+          "actor": "Finance",
+          "action": "Review available budget",
+          "condition": null
+        },
+        {
+          "id": 3,
+          "actor": "Finance",
+          "action": "Approve budget",
+          "condition": "If sufficient funds are available"
+        },
+        {
+          "id": 4,
+          "actor": "Finance",
+          "action": "Reject the request",
+          "condition": "If sufficient funds are not available"
+        }
+      ],
+      "decision_points": [
+        {
+          "condition": "Are sufficient funds available?",
+          "true_branch": "Budget is approved",
+          "false_branch": "Request is rejected"
+        }
+      ],
+      "inputs": [
+        "Budget request",
+        "Available budget information"
+      ],
+      "outputs": [
+        "Budget approved",
+        "Request rejected"
+      ],
+      "risks": [
+        "Delayed approval",
+        "Missing financial data"
+      ],
+      "missing_information": "Criteria that define 'sufficient funds'; review timelines/SLA; notification method and recipients for approval/rejection; escalation path; required supporting documentation."
+    }
+  }
+]

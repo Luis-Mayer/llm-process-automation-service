@@ -302,7 +302,7 @@ It compares the `/extract-text` endpoint output against a golden dataset in
 Run the evaluation script after starting the service locally:
 
 ```
-python evaluation/run_evaluation.py
+uv run python evaluation/run_evaluation.py
 ```
 
 ## Logging and Artifacts

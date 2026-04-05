@@ -55,7 +55,7 @@ use the evaluation workflow in the `evaluation/` directory.
    ```
 2. Run the evaluation script:
    ```
-   python evaluation/run_evaluation.py
+   uv run python evaluation/run_evaluation.py
    ```
 
 The script reads `evaluation/golden_set.json`, evaluates the `/extract-text`

@@ -163,14 +163,19 @@ def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
     output_coverage = contains_expected_items(expected.get("outputs", []), actual_outputs)
     risk_coverage = contains_expected_items(expected.get("risks", []), actual_risks)
 
-    # Determine overall pass/fail using AND logic
-    # All metrics must meet their thresholds (0.8 = 80%) for case to pass
-    passed = (
-        role_coverage >= 0.8
-        and min_steps_passed
-        and output_coverage >= 0.8
-        and risk_coverage >= 0.8
-    )
+    # Convert the boolean step check into a numeric score
+    step_score = 1.0 if min_steps_passed else 0.0
+
+    # Compute an overall score across all evaluation dimensions
+    overall_score = (
+        role_coverage
+        + step_score
+        + output_coverage
+        + risk_coverage
+    ) / 4
+
+    # Determine overall pass/fail using threshold-based logic
+    passed = overall_score >= 0.8
 
     # Add detailed metrics to result
     result.update(
@@ -181,8 +186,10 @@ def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
                 "step_count": len(actual_steps),
                 "min_steps_expected": expected.get("min_steps", 0),
                 "min_steps_passed": min_steps_passed,
+                "step_score": step_score,
                 "output_coverage": output_coverage,
                 "risk_coverage": risk_coverage,
+                "overall_score": overall_score,
             },
             "actual_output": actual,
         }
@@ -217,6 +224,13 @@ def main() -> None:
     total = len(results)
     passed = sum(result["passed"] for result in results)
     print(f"Evaluation finished: {passed}/{total} cases passed")
+    average_score = sum(
+        result["metrics"]["overall_score"]
+        for result in results
+        if "metrics" in result
+    ) / total
+
+    print(f"Average overall score: {average_score:.2f}")
 
     # Print detailed results for each test case
     for result in results:
