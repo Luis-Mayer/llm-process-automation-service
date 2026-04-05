@@ -7,5 +7,6 @@ dist/
 build/
 logs/
 artifacts/
+evaluation/results/
 tests/test_api_call_extract_text.py
 tests/test_api_call_extract_JSON.py

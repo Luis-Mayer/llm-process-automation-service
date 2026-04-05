@@ -28,5 +28,25 @@
       "outputs": ["budget approval", "rejection"],
       "risks": ["delayed approval", "missing financial data"]
     }
+  },
+  {
+  "id": "vacation_request_01",
+  "input_text": "An employee submits a vacation request through the HR system. The direct manager reviews the request. If the requested dates overlap with a critical project phase, the manager may reject the request. Otherwise, the request is approved and the employee is notified.",
+  "expected": {
+    "roles": ["Employee", "Manager", "HR system"],
+    "min_steps": 3,
+    "outputs": ["approved vacation request", "rejected vacation request", "employee notification"],
+    "risks": []
+    }
+  },
+  {
+    "id": "supplier_onboarding_01",
+    "input_text": "A buyer submits a request to onboard a new supplier. Procurement collects the supplier's tax documents and banking information. Compliance checks whether the supplier meets regulatory requirements. If any required document is missing, the request is sent back to procurement. Once all checks are completed successfully, the supplier is activated in the system. Risks include missing documents and compliance delays.",
+    "expected": {
+      "roles": ["Buyer", "Procurement", "Compliance"],
+      "min_steps": 4,
+      "outputs": ["supplier activated"],
+      "risks": ["missing documents", "compliance delays"]
+    }
   }
 ]

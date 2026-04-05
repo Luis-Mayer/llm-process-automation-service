@@ -167,12 +167,7 @@ def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
     step_score = 1.0 if min_steps_passed else 0.0
 
     # Compute an overall score across all evaluation dimensions
-    overall_score = (
-        role_coverage
-        + step_score
-        + output_coverage
-        + risk_coverage
-    ) / 4
+    overall_score = (role_coverage + step_score + output_coverage + risk_coverage) / 4
 
     # Determine overall pass/fail using threshold-based logic
     passed = overall_score >= 0.8
@@ -224,11 +219,9 @@ def main() -> None:
     total = len(results)
     passed = sum(result["passed"] for result in results)
     print(f"Evaluation finished: {passed}/{total} cases passed")
-    average_score = sum(
-        result["metrics"]["overall_score"]
-        for result in results
-        if "metrics" in result
-    ) / total
+    average_score = (
+        sum(result["metrics"]["overall_score"] for result in results if "metrics" in result) / total
+    )
 
     print(f"Average overall score: {average_score:.2f}")
 
