@@ -43,6 +43,9 @@ llm-process-automation-service/
 │   ├── test_schema.py
 │   └── test_service.py
 │
+├── evaluation/
+│   ├── golden_set.json
+│   └── run_evaluation.py
 ├── .env.example
 ├── .gitignore
 ├── Dockerfile
@@ -289,6 +292,18 @@ uv run pytest
 ```
 
 The test suite includes schema, service, and endpoint tests. Live extraction tests can be run locally when an OpenAI API key is available.
+
+## Evaluation
+
+A lightweight evaluation pipeline is available in `evaluation/run_evaluation.py`.
+It compares the `/extract-text` endpoint output against a golden dataset in
+`evaluation/golden_set.json` and saves results to `evaluation/results.json`.
+
+Run the evaluation script after starting the service locally:
+
+```
+python evaluation/run_evaluation.py
+```
 
 ## Logging and Artifacts
 

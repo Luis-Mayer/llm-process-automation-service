@@ -44,6 +44,23 @@ Run tests with:
 uv run pytest
 ```
 
+## Evaluation
+
+If you want to validate extraction quality against a predefined benchmark,
+use the evaluation workflow in the `evaluation/` directory.
+
+1. Start the API locally:
+   ```
+   uv run uvicorn app.main:app --reload
+   ```
+2. Run the evaluation script:
+   ```
+   python evaluation/run_evaluation.py
+   ```
+
+The script reads `evaluation/golden_set.json`, evaluates the `/extract-text`
+endpoint, and writes results to `evaluation/results.json`.
+
 ## Common Issues
 
 - **Missing OpenAI API Key**: Ensure `OPENAI_API_KEY` is set in `.env`.
