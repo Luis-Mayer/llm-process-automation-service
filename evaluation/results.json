@@ -15,55 +15,55 @@
     },
     "actual_output": {
       "process_name": "Unknown",
-      "summary": "An employee submits an invoice which the manager reviews. If the invoice amount exceeds 5000 EUR, finance must approve it. After approval, payment is triggered.",
+      "summary": "Employee submits an invoice, manager reviews it. If the invoice amount exceeds 5000 EUR, finance must approve before payment is triggered. After required approval, payment is triggered.",
       "roles": [
-        "Employee",
-        "Manager",
-        "Finance"
+        "employee",
+        "manager",
+        "finance"
       ],
       "steps": [
         {
           "id": 1,
-          "actor": "Employee",
-          "action": "Submit invoice",
+          "actor": "employee",
+          "action": "submits invoice",
           "condition": null
         },
         {
           "id": 2,
-          "actor": "Manager",
-          "action": "Review invoice",
+          "actor": "manager",
+          "action": "reviews invoice",
           "condition": null
         },
         {
           "id": 3,
-          "actor": "Finance",
-          "action": "Approve invoice",
-          "condition": "Amount exceeds 5000 EUR"
+          "actor": "finance",
+          "action": "approves invoice",
+          "condition": "amount exceeds 5000 EUR"
         },
         {
           "id": 4,
-          "actor": "Not specified",
-          "action": "Trigger payment",
-          "condition": "After approval"
+          "actor": "unspecified",
+          "action": "triggers payment",
+          "condition": "after required approval"
         }
       ],
       "decision_points": [
         {
-          "condition": "Amount exceeds 5000 EUR",
-          "true_branch": "Finance approval required",
-          "false_branch": "Finance approval not required"
+          "condition": "invoice amount exceeds 5000 EUR",
+          "true_branch": "finance must approve the invoice before payment is triggered",
+          "false_branch": "payment is triggered without finance approval (after manager review)"
         }
       ],
       "inputs": [
-        "Invoice",
-        "Invoice amount"
+        "invoice",
+        "invoice amount (EUR)"
       ],
       "outputs": [
-        "Payment triggered",
-        "Finance approval (if required)"
+        "invoice approval (when required)",
+        "payment executed/triggered"
       ],
       "risks": [],
-      "missing_information": "Who triggers the payment; what happens if manager or finance rejects the invoice; payment method and timing; approval timeframes; handling when amount is exactly 5000 EUR (inclusive/exclusive); any escalation or exception handling."
+      "missing_information": "Who triggers the payment; whether manager must explicitly approve for amounts ≤ 5000 EUR; what happens if finance rejects the invoice; timing/SLA for review/approval and payment; payment method and confirmation; handling of invoices in currencies other than EUR."
     }
   },
   {
@@ -82,7 +82,7 @@
     },
     "actual_output": {
       "process_name": "Unknown",
-      "summary": "An employee creates and submits a purchase request to the manager. The manager checks the request and returns it to the employee if incomplete. If the amount exceeds 10,000 EUR, procurement reviews it. After final approval, a purchase order is created.",
+      "summary": "An employee creates and submits a purchase request to the manager. The manager checks the request and returns it to the employee if it is incomplete. If the request amount is above 10,000 EUR, procurement reviews it. After final approval, a purchase order is created.",
       "roles": [
         "Employee",
         "Manager",
@@ -92,77 +92,79 @@
         {
           "id": 1,
           "actor": "Employee",
-          "action": "Create a purchase request and submit it to the manager",
+          "action": "Create purchase request and submit it to the manager.",
           "condition": null
         },
         {
           "id": 2,
           "actor": "Manager",
-          "action": "Check the purchase request",
+          "action": "Check the purchase request.",
           "condition": null
         },
         {
           "id": 3,
           "actor": "Manager",
-          "action": "If the request is incomplete, send it back to the employee",
+          "action": "Return the request to the employee if the request is incomplete.",
           "condition": "Request is incomplete"
         },
         {
           "id": 4,
-          "actor": "Manager",
-          "action": "If the amount is above 10000 EUR, forward the request to procurement for review",
-          "condition": "Amount > 10000 EUR"
+          "actor": "Procurement",
+          "action": "Review the request when the amount is above 10,000 EUR.",
+          "condition": "Request amount > 10,000 EUR"
         },
         {
           "id": 5,
-          "actor": "Unspecified (final approver not stated)",
-          "action": "After final approval, create a purchase order",
+          "actor": "Not specified",
+          "action": "After final approval, create a purchase order.",
           "condition": "Final approval obtained"
         }
       ],
       "decision_points": [
         {
-          "condition": "Is the request complete?",
-          "true_branch": "Proceed to amount check / next approval steps",
-          "false_branch": "Manager sends the request back to the employee"
+          "condition": "Request is incomplete",
+          "true_branch": "Manager sends the request back to the employee",
+          "false_branch": "Proceed to amount check / further approval"
         },
         {
-          "condition": "Is the amount above 10000 EUR?",
+          "condition": "Request amount > 10,000 EUR",
           "true_branch": "Procurement reviews the request",
-          "false_branch": "Proceed to final approval (no procurement review)"
+          "false_branch": "Proceed to final approval"
+        },
+        {
+          "condition": "Final approval obtained",
+          "true_branch": "Create purchase order",
+          "false_branch": "Not specified in the text"
         }
       ],
       "inputs": [
-        "Purchase request (includes amount)"
+        "Purchase request (including amount)"
       ],
       "outputs": [
-        "Purchase order"
+        "Purchase order",
+        "Returned purchase request to employee (when incomplete)"
       ],
-      "risks": [
-        "Final approver is not specified (unclear approval authority)",
-        "Outcome and handling after procurement review are not defined",
-        "No criteria provided for what makes a request 'incomplete'"
-      ],
-      "missing_information": "Identity of the final approver; criteria for completeness; steps/outcomes after procurement review (e.g., approval, rejection, escalation); what happens if procurement rejects or requests changes; timeline/SLAs for reviews"
+      "risks": [],
+      "missing_information": "Who performs final approval; who (which role) creates the purchase order; what happens if procurement rejects the request; what constitutes 'complete' request; approval path/authority for amounts <= 10,000 EUR."
     }
   },
   {
     "id": "budget_check_01",
     "status_code": 200,
-    "passed": false,
+    "passed": true,
     "metrics": {
       "role_coverage": 1.0,
-      "step_count": 4,
+      "step_count": 3,
       "min_steps_expected": 3,
       "min_steps_passed": true,
       "step_score": 1.0,
-      "output_coverage": 0.0,
+      "output_coverage": 0.5,
       "risk_coverage": 1.0,
-      "overall_score": 0.75
+      "overall_score": 0.875
     },
     "actual_output": {
       "process_name": "Unknown",
-      "summary": "A department submits a budget request. Finance reviews available budget and approves the request if sufficient funds exist; otherwise the request is rejected. Risks include delayed approval and missing financial data.",
+      "summary": "A department submits a budget request. Finance reviews available budget and approves the request if sufficient funds exist; otherwise the request is rejected.",
       "roles": [
         "Department",
         "Finance"
@@ -183,21 +185,15 @@
         {
           "id": 3,
           "actor": "Finance",
-          "action": "Approve the budget request",
-          "condition": "If sufficient funds are available"
-        },
-        {
-          "id": 4,
-          "actor": "Finance",
-          "action": "Reject the budget request",
-          "condition": "If sufficient funds are not available"
+          "action": "Approve request if funds are sufficient; reject request if funds are insufficient",
+          "condition": "Decision based on whether sufficient funds are available"
         }
       ],
       "decision_points": [
         {
-          "condition": "Are sufficient funds available?",
-          "true_branch": "Approve the budget request",
-          "false_branch": "Reject the budget request"
+          "condition": "Sufficient funds available?",
+          "true_branch": "Budget approved",
+          "false_branch": "Request rejected"
         }
       ],
       "inputs": [
@@ -205,33 +201,33 @@
         "Available budget information"
       ],
       "outputs": [
-        "Approved budget",
-        "Rejected budget request"
+        "Budget approved",
+        "Request rejected"
       ],
       "risks": [
         "Delayed approval",
         "Missing financial data"
       ],
-      "missing_information": "Criteria for what constitutes 'sufficient funds', notification/communication steps after approval or rejection, timelines or SLAs for review and approval, and any appeal or resubmission process are not specified."
+      "missing_information": "Approval criteria/thresholds for sufficiency; notification and communication process after approval/rejection; timelines or SLAs for review and decision; process for resubmission or appeal; who records or finalizes the decision."
     }
   },
   {
     "id": "vacation_request_01",
     "status_code": 200,
-    "passed": false,
+    "passed": true,
     "metrics": {
-      "role_coverage": 0.6666666666666666,
-      "step_count": 6,
+      "role_coverage": 1.0,
+      "step_count": 5,
       "min_steps_expected": 3,
       "min_steps_passed": true,
       "step_score": 1.0,
-      "output_coverage": 0.3333333333333333,
+      "output_coverage": 1.0,
       "risk_coverage": 1.0,
-      "overall_score": 0.75
+      "overall_score": 1.0
     },
     "actual_output": {
       "process_name": "Unknown",
-      "summary": "An employee submits a vacation request through the HR system; the direct manager reviews it and, if the requested dates overlap with a critical project phase the manager may reject it, otherwise the manager approves and the employee is notified.",
+      "summary": "Employee submits a vacation request via the HR system; the direct manager reviews it. If the requested dates overlap a critical project phase, the manager may reject the request; otherwise the request is approved and the employee is notified.",
       "roles": [
         "Employee",
         "Direct manager",
@@ -241,57 +237,54 @@
         {
           "id": 1,
           "actor": "Employee",
-          "action": "Submits a vacation request through the HR system.",
+          "action": "Submit vacation request through the HR system",
           "condition": null
         },
         {
           "id": 2,
           "actor": "Direct manager",
-          "action": "Reviews the vacation request.",
+          "action": "Review the vacation request",
           "condition": null
         },
         {
           "id": 3,
           "actor": "Direct manager",
-          "action": "Determines whether the requested dates overlap with a critical project phase.",
-          "condition": "If requested dates overlap with a critical project phase"
+          "action": "Determine whether requested dates overlap with a critical project phase",
+          "condition": null
         },
         {
           "id": 4,
           "actor": "Direct manager",
-          "action": "May reject the request.",
-          "condition": "True branch of step 3 (dates overlap)"
+          "action": "Reject the request (may reject)",
+          "condition": "Requested dates overlap with a critical project phase"
         },
         {
           "id": 5,
           "actor": "Direct manager",
-          "action": "Approves the request.",
-          "condition": "False branch of step 3 (dates do not overlap)"
-        },
-        {
-          "id": 6,
-          "actor": "Not specified in source text",
-          "action": "Employee is notified of the decision.",
-          "condition": null
+          "action": "Approve the request and notify the employee",
+          "condition": "Requested dates do not overlap with a critical project phase"
         }
       ],
       "decision_points": [
         {
           "condition": "Requested dates overlap with a critical project phase",
-          "true_branch": "Manager may reject the request.",
-          "false_branch": "Manager approves the request and the employee is notified."
+          "true_branch": "Direct manager may reject the request",
+          "false_branch": "Request is approved and the employee is notified"
         }
       ],
       "inputs": [
-        "Vacation request (includes requested dates) submitted via HR system"
+        "Vacation request (includes requested dates)",
+        "Information about critical project phase dates / project schedule"
       ],
       "outputs": [
         "Request approved",
         "Request rejected",
-        "Employee notification of approval or rejection"
+        "Employee notified of decision"
       ],
-      "risks": [],
-      "missing_information": "Who (manager or HR system) performs the notification; how \"critical project phase\" is identified/defined; whether additional approvals or escalations are required; response time/SLA for manager review; whether rejection is mandatory when overlap occurs or discretionary beyond 'may reject'."
+      "risks": [
+        "Vacation requests that overlap a critical project phase may be rejected"
+      ],
+      "missing_information": "Who performs the notification (direct manager or HR system); definition/criteria of a \"critical project phase\"; timelines for review/decision and what happens if the manager does not act; whether there is an appeal or escalation process; how the decision is recorded in the HR system"
     }
   },
   {
@@ -310,7 +303,7 @@
     },
     "actual_output": {
       "process_name": "Unknown",
-      "summary": "Buyer requests onboarding of a new supplier. Procurement collects tax and banking documents. Compliance verifies regulatory requirements. If required documents are missing the request is returned to procurement; if checks pass the supplier is activated in the system.",
+      "summary": "Buyer submits a supplier onboarding request; Procurement collects tax and banking documents; Compliance verifies regulatory requirements; if documents are missing the request is returned to Procurement; if checks pass the supplier is activated in the system.",
       "roles": [
         "Buyer",
         "Procurement",
@@ -320,56 +313,60 @@
         {
           "id": 1,
           "actor": "Buyer",
-          "action": "Submit request to onboard a new supplier",
+          "action": "Submits request to onboard a new supplier",
           "condition": null
         },
         {
           "id": 2,
           "actor": "Procurement",
-          "action": "Collect the supplier's tax documents and banking information",
+          "action": "Collects the supplier's tax documents and banking information",
           "condition": null
         },
         {
           "id": 3,
           "actor": "Compliance",
-          "action": "Check whether the supplier meets regulatory requirements",
-          "condition": null
+          "action": "Checks whether the supplier meets regulatory requirements",
+          "condition": "After procurement collects required documents"
         },
         {
           "id": 4,
-          "actor": "Not specified",
-          "action": "If any required document is missing, send the request back to procurement",
-          "condition": "Any required document missing"
+          "actor": "Compliance",
+          "action": "Sends the request back to Procurement",
+          "condition": "If any required document is missing"
         },
         {
           "id": 5,
-          "actor": "Not specified",
-          "action": "Activate the supplier in the system once all checks are completed successfully",
-          "condition": "All checks completed successfully"
+          "actor": "Not specified in text",
+          "action": "Activate the supplier in the system",
+          "condition": "Once all checks are completed successfully"
         }
       ],
       "decision_points": [
         {
-          "condition": "Any required document missing",
-          "true_branch": "Request sent back to procurement",
-          "false_branch": "Supplier activated in the system after successful checks"
+          "condition": "Any required document is missing",
+          "true_branch": "Request is sent back to Procurement",
+          "false_branch": "Proceed with compliance checks / continue toward activation"
+        },
+        {
+          "condition": "All checks completed successfully",
+          "true_branch": "Supplier is activated in the system",
+          "false_branch": "Not specified in source text"
         }
       ],
       "inputs": [
-        "Request to onboard a new supplier (from Buyer)",
+        "Supplier onboarding request",
         "Supplier tax documents",
-        "Supplier banking information",
-        "Regulatory requirements (for Compliance checks)"
+        "Supplier banking information"
       ],
       "outputs": [
-        "Supplier activated in the system",
-        "Request returned to procurement for missing documents"
+        "Request sent back to Procurement (if documents missing)",
+        "Supplier activated in the system"
       ],
       "risks": [
         "Missing documents",
         "Compliance delays"
       ],
-      "missing_information": "Actual process name; which actor/system performs the action of sending the request back and which actor/system performs the supplier activation; exact list of required documents beyond tax and banking; SLAs or timeframes for procurement collection and compliance checks; details of resubmission flow after a request is returned"
+      "missing_information": "Which role performs the activation in the system; exact list of required documents; what happens if compliance fails for reasons other than missing documents; turnaround times or SLAs for each step; detailed handling of resubmissions and corrections."
     }
   }
 ]
