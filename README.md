@@ -319,7 +319,6 @@ This supports debugging, reproducibility, and lightweight evaluation of extracti
 Possible next steps:
 
 - prompt versioning and comparison of extraction strategies
-- additional schema fields such as inputs, outputs, risks, and missing information
 - support for BPMN XML generation
 - artifact persistence via mounted volumes or external storage
 - basic evaluation metrics for extraction quality
